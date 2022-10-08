@@ -14,7 +14,12 @@ class AmazonScrapper {
     if (!description.length)
       description = $('h1[class="a-size-base-plus a-text-bold"] ~ ul span');
 
-    const prices = $("div#centerCol span.a-offscreen");
+    const prices = $('div#centerCol span[class="a-offscreen"]');
+    // remove /count value
+    for(let i=0; i< prices.length; i++){
+      if(prices[i].parentNode.attribs['data-a-size'] == 'mini') prices.splice(i, 1)
+    }
+
     let originalPrice = null,
       discountedPrice = null;
     if (prices.length) {

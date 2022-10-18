@@ -1,6 +1,6 @@
 {
   "name": "amazon-scrape",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Gonna fetch meta details of amazon product page(s)",
   "main": "index.js",
   "scripts": {

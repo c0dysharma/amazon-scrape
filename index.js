@@ -15,6 +15,8 @@ class AmazonScrapper {
       description = $('h1[class="a-size-base-plus a-text-bold"] ~ ul span');
 
     const prices = $('div#centerCol span[class="a-offscreen"]');
+
+    let categories = $('#wayfinding-breadcrumbs_feature_div .a-list-item  > a') 
     // remove /count value
     for(let i=0; i< prices.length; i++){
       if(prices[i].parentNode.attribs['data-a-size'] == 'mini') prices.splice(i, 1)
@@ -60,6 +62,19 @@ class AmazonScrapper {
       if (bigImage.length) productImages = [bigImage[0].attribs["src"]];
     }
 
+    // Get categories
+    if(categories.length){
+      let cats = ''
+      for(let category of categories){
+        cats += ' > ' + category.firstChild.data.trim()
+      }
+      // remove initial ' > '
+      cats = cats.slice(2)
+      cats = cats.trim()
+
+      categories = cats
+    }else categories = 'Others'
+
     const metaData = {
       status: res.status,
       originalLink: link,
@@ -71,6 +86,7 @@ class AmazonScrapper {
         : false,
       originalPrice,
       discountedPrice,
+      categoriesTree: categories
     };
     return metaData;
   }
